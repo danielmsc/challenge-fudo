@@ -7,8 +7,14 @@ environment:
   sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
+  dartz: ^0.10.1
+  dio: ^5.5.0+1
   flutter:
     sdk: flutter
+  fluttertoast: ^8.2.6
+  get: ^4.6.6
+  internet_connection_checker: ^1.0.0+1
+  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:
