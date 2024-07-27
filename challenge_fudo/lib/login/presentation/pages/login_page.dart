@@ -9,7 +9,7 @@ class LoginPage extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text('Login')),
       body: _Content(controller: controller),
     );
   }
@@ -22,28 +22,35 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: controller.formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: controller.userTextController,
-            validator: (value) => controller.validateUser(value),
-          ),
-          TextFormField(
-            obscureText: true,
-            controller: controller.passTextController,
-            validator: (value) => controller.validatePassword(value),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (controller.validateForm()) {
-                await controller.login();
-              }
-            },
-            child: const Text('Ingresar'),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Form(
+        key: controller.formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              controller: controller.userTextController,
+              validator: (value) => controller.validateUser(value),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 32.0),
+              child: TextFormField(
+                obscureText: true,
+                controller: controller.passTextController,
+                validator: (value) => controller.validatePassword(value),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (controller.validateForm()) {
+                  await controller.login();
+                }
+              },
+              child: const Text('Ingresar'),
+            ),
+          ],
+        ),
       ),
     );
   }

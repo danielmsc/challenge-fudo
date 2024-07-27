@@ -1,3 +1,4 @@
+import 'package:challenge_fudo/core/presentation/pages/routes.dart';
 import 'package:challenge_fudo/posts/domain/entities/post.dart';
 import 'package:challenge_fudo/posts/domain/entities/user.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_posts.dart';
@@ -55,4 +56,7 @@ class PostsController extends GetxController with StateMixin {
       }
     }
   }
+
+  Future<void> goToCreatePostPage() async =>
+      await Get.toNamed(Routes.createPostPage);
 }

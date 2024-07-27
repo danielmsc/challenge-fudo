@@ -17,7 +17,7 @@ class PostsPage extends GetView<PostsController> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => print('fab'),
+        onPressed: () async => await controller.goToCreatePostPage(),
       ),
     );
   }
