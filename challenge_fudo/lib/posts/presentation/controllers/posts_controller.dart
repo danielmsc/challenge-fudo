@@ -6,9 +6,10 @@ import 'package:get/get.dart';
 
 class PostsController extends GetxController with StateMixin {
   late List<Post> posts;
-  List<Post> filteredPosts = [];
   late List<User> users;
-  List<User> filteredUsers = [];
+
+  final _filteredPosts = <Post>[].obs;
+  List<Post> get filteredPosts => _filteredPosts;
 
   final GetPosts getPostsUseCase;
   final GetUsers getUsersUseCase;
@@ -28,7 +29,7 @@ class PostsController extends GetxController with StateMixin {
     final result = await getPostsUseCase(NoParamsGetPosts());
     result.fold((l) => l.showError(), (r) {
       posts = r;
-      filteredPosts = List.from(r);
+      _filteredPosts.value = List.from(r);
     });
   }
 
@@ -36,7 +37,20 @@ class PostsController extends GetxController with StateMixin {
     final result = await getUsersUseCase(NoParamsGetUsers());
     result.fold((l) => l.showError(), (r) {
       users = r;
-      filteredUsers = List.from(r);
     });
+  }
+
+  void onSearchBarChanged(String name) {
+    if (name.isEmpty) {
+      _filteredPosts.value = posts;
+    } else {
+      final user = users.firstWhereOrNull(
+          (user) => user.name.toLowerCase() == name.toLowerCase());
+
+      if (user != null) {
+        _filteredPosts.value =
+            List.from(posts.where((post) => post.userId == user.id));
+      }
+    }
   }
 }

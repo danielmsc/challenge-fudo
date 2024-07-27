@@ -1,4 +1,5 @@
 import 'package:challenge_fudo/posts/presentation/controllers/posts_controller.dart';
+import 'package:challenge_fudo/posts/presentation/widgets/post_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +10,7 @@ class PostsPage extends GetView<PostsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text('Posts')),
       body: controller.obx(
         onLoading: const Center(child: CircularProgressIndicator()),
         (_) => _Content(controller: controller),
@@ -25,6 +26,30 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('success');
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: SearchBar(
+              onChanged: (value) => controller.onSearchBarChanged(value),
+            ),
+          ),
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.filteredPosts.length,
+                itemBuilder: (context, index) => PostTile(
+                  title: controller.filteredPosts[index].title,
+                  body: controller.filteredPosts[index].body,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
