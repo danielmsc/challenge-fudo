@@ -14,13 +14,13 @@ class PostsDataSourceImpl implements PostsDataSource {
 
   @override
   Future<List<PostModel>> getPosts() async {
-    final result = await client.get('/posts');
-    return (result as List).map((e) => PostModel.fromJson(e)).toList();
+    final response = await client.get('/posts');
+    return (response.data as List).map((e) => PostModel.fromJson(e)).toList();
   }
 
   @override
   Future<List<UserModel>> getUsers() async {
-    final result = await client.get('/users');
-    return (result as List).map((e) => UserModel.fromJson(e)).toList();
+    final response = await client.get('/users');
+    return (response.data as List).map((e) => UserModel.fromJson(e)).toList();
   }
 }

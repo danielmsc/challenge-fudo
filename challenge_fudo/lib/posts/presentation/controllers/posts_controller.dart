@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 
 class PostsController extends GetxController with StateMixin {
   late List<Post> posts;
-  final List<Post> filteredPosts = [];
+  List<Post> filteredPosts = [];
   late List<User> users;
-  final List<User> filteredUsers = [];
+  List<User> filteredUsers = [];
 
   final GetPosts getPostsUseCase;
   final GetUsers getUsersUseCase;
@@ -18,7 +18,25 @@ class PostsController extends GetxController with StateMixin {
 
   @override
   void onInit() async {
-    // TODO: implement onInit
+    await getPosts();
+    await getUsers();
+    change(null, status: RxStatus.success());
     super.onInit();
+  }
+
+  Future<void> getPosts() async {
+    final result = await getPostsUseCase(NoParamsGetPosts());
+    result.fold((l) => l.showError(), (r) {
+      posts = r;
+      filteredPosts = List.from(r);
+    });
+  }
+
+  Future<void> getUsers() async {
+    final result = await getUsersUseCase(NoParamsGetUsers());
+    result.fold((l) => l.showError(), (r) {
+      users = r;
+      filteredUsers = List.from(r);
+    });
   }
 }

@@ -12,32 +12,38 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DependencyInjector {
-  static createPostsRepository() {
+  static PostsRepository createPostsRepository() {
     try {
       return Get.find<PostsRepository>();
     } catch (_) {
       final dataSource =
           Get.put(PostsDataSourceImpl(client: Get.find<DioClient>()));
-      Get.put<PostsRepository>(PostsRepositoryImpl(dataSource: dataSource));
+      final repository = PostsRepositoryImpl(dataSource: dataSource);
+      Get.put<PostsRepository>(repository);
+      return repository;
     }
   }
 
-  static createLoginRepository() {
+  static LoginRepository createLoginRepository() {
     try {
       return Get.find<LoginRepository>();
     } catch (_) {
       final dataSource = Get.put(LoginDataSourceImpl());
-      Get.put<LoginRepository>(LoginRepositoryImpl(dataSource: dataSource));
+      final repository = LoginRepositoryImpl(dataSource: dataSource);
+      Get.put<LoginRepository>(repository);
+      return repository;
     }
   }
 
-  static createLocalRepository() {
+  static LocalRepository createLocalRepository() {
     try {
       return Get.find<LocalRepository>();
     } catch (_) {
       final dataSource =
           Get.put(LocalDataSourceImpl(prefs: Get.find<SharedPreferences>()));
-      Get.put<LocalRepository>(LocalRepositoryImpl(dataSource: dataSource));
+      final repository = LocalRepositoryImpl(dataSource: dataSource);
+      Get.put<LocalRepository>(repository);
+      return repository;
     }
   }
 }
