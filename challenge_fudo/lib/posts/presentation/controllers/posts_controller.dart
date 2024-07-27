@@ -1,3 +1,3 @@
 import 'package:get/get.dart';
 
-class PostsController extends GetxController {}
+class PostsController extends GetxController with StateMixin {}
