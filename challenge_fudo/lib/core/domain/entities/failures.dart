@@ -7,16 +7,14 @@ abstract class Failure {
 class NetworkFailure extends Failure {
   @override
   showError() {
-    // TODO: implement showError
-    throw UnimplementedError();
+    Fluttertoast.showToast(msg: 'No hay conexión a internet');
   }
 }
 
 class TimeoutFailure extends Failure {
   @override
   showError() {
-    // TODO: implement showError
-    throw UnimplementedError();
+    Fluttertoast.showToast(msg: 'Error de timeout');
   }
 }
 
