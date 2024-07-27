@@ -1,3 +1,4 @@
+import 'package:challenge_fudo/core/presentation/pages/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -10,12 +11,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return GetMaterialApp(
+      getPages: Pages.pages,
+      //TODO parametrizar dependiendo si hizo login o no
+      initialRoute: Routes.loginPage,
     );
   }
 }
