@@ -15,6 +15,10 @@ class PostsPage extends GetView<PostsController> {
         onLoading: const Center(child: CircularProgressIndicator()),
         (_) => _Content(controller: controller),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => print('fab'),
+      ),
     );
   }
 }

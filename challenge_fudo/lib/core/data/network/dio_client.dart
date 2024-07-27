@@ -39,4 +39,16 @@ class DioClient {
       throw ExceptionUtils.getExceptionType(e);
     }
   }
+
+  Future<Response<dynamic>> post(String path, dynamic data) async {
+    try {
+      if (!await InternetConnectionChecker().hasConnection) {
+        throw NetworkException();
+      }
+      final dio = await _getDioClient();
+      return await dio.post(path, data: data);
+    } on DioException catch (e) {
+      throw ExceptionUtils.getExceptionType(e);
+    }
+  }
 }

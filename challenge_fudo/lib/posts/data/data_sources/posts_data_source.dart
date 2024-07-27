@@ -5,6 +5,7 @@ import 'package:challenge_fudo/posts/data/models/user_model.dart';
 abstract class PostsDataSource {
   Future<List<PostModel>> getPosts();
   Future<List<UserModel>> getUsers();
+  Future<bool> createPost(PostModel post);
 }
 
 class PostsDataSourceImpl implements PostsDataSource {
@@ -22,5 +23,12 @@ class PostsDataSourceImpl implements PostsDataSource {
   Future<List<UserModel>> getUsers() async {
     final response = await client.get('/users');
     return (response.data as List).map((e) => UserModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<bool> createPost(PostModel post) async {
+    final response = await client.post('/posts',
+        {'title': post.title, 'body': post.body, 'userId': post.userId});
+    return response.statusCode == 200;
   }
 }
