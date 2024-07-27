@@ -29,6 +29,6 @@ class PostsDataSourceImpl implements PostsDataSource {
   Future<bool> createPost(PostModel post) async {
     final response = await client.post('/posts',
         {'title': post.title, 'body': post.body, 'userId': post.userId});
-    return response.statusCode == 200;
+    return response.statusCode == 201;
   }
 }

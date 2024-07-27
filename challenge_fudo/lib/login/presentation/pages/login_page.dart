@@ -32,6 +32,7 @@ class _Content extends StatelessWidget {
             TextFormField(
               controller: controller.userTextController,
               validator: (value) => controller.validateUser(value),
+              decoration: const InputDecoration(hintText: 'Usuario'),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0, bottom: 32.0),
@@ -39,6 +40,7 @@ class _Content extends StatelessWidget {
                 obscureText: true,
                 controller: controller.passTextController,
                 validator: (value) => controller.validatePassword(value),
+                decoration: const InputDecoration(hintText: 'Contraseña'),
               ),
             ),
             ElevatedButton(
