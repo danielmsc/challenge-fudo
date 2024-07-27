@@ -11,6 +11,8 @@ class ApiNetwork {
       return Left(NetworkFailure());
     } on TimeoutException {
       return Left(TimeoutFailure());
+    } on InvalidCredentialsException {
+      return Left(InvalidCredentialsFailure());
     }
   }
 }

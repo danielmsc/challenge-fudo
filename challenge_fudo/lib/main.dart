@@ -1,8 +1,13 @@
 import 'package:challenge_fudo/core/presentation/pages/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put<SharedPreferences>(await SharedPreferences.getInstance(),
+      permanent: true);
+
   runApp(const MainApp());
 }
 

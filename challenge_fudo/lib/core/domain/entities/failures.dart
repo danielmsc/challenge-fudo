@@ -1,3 +1,5 @@
+import 'package:fluttertoast/fluttertoast.dart';
+
 abstract class Failure {
   showError();
 }
@@ -15,5 +17,12 @@ class TimeoutFailure extends Failure {
   showError() {
     // TODO: implement showError
     throw UnimplementedError();
+  }
+}
+
+class InvalidCredentialsFailure extends Failure {
+  @override
+  showError() {
+    Fluttertoast.showToast(msg: 'Las credenciales son inválidas');
   }
 }

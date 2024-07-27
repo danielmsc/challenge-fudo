@@ -4,6 +4,8 @@ class NetworkException implements Exception {}
 
 class TimeoutException implements Exception {}
 
+class InvalidCredentialsException implements Exception {}
+
 class ExceptionUtils {
   static Exception getExceptionType(DioException exception) {
     if (exception.type == DioExceptionType.connectionTimeout ||
