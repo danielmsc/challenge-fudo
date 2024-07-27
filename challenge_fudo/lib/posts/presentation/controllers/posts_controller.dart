@@ -50,6 +50,8 @@ class PostsController extends GetxController with StateMixin {
       if (user != null) {
         _filteredPosts.value =
             List.from(posts.where((post) => post.userId == user.id));
+      } else {
+        _filteredPosts.value = posts;
       }
     }
   }

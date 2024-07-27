@@ -33,6 +33,7 @@ class _Content extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: SearchBar(
+              hintText: 'Buscar por usuario...',
               onChanged: (value) => controller.onSearchBarChanged(value),
             ),
           ),
