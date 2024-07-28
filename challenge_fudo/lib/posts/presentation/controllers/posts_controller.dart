@@ -1,8 +1,10 @@
 import 'package:challenge_fudo/core/presentation/pages/routes.dart';
 import 'package:challenge_fudo/posts/domain/entities/post.dart';
 import 'package:challenge_fudo/posts/domain/entities/user.dart';
+import 'package:challenge_fudo/posts/domain/use_cases/get_local_posts.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_posts.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_users.dart';
+import 'package:challenge_fudo/posts/domain/use_cases/insert_post.dart';
 import 'package:get/get.dart';
 
 class PostsController extends GetxController with StateMixin {
@@ -14,9 +16,15 @@ class PostsController extends GetxController with StateMixin {
 
   final GetPosts getPostsUseCase;
   final GetUsers getUsersUseCase;
+  final InsertPost insertPostUseCase;
+  final GetLocalPosts getLocalPostsUseCase;
 
-  PostsController(
-      {required this.getPostsUseCase, required this.getUsersUseCase});
+  PostsController({
+    required this.getPostsUseCase,
+    required this.getUsersUseCase,
+    required this.insertPostUseCase,
+    required this.getLocalPostsUseCase,
+  });
 
   @override
   void onInit() async {

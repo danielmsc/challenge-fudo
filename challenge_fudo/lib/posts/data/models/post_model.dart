@@ -13,4 +13,13 @@ class PostModel extends Post {
       id: json['id'],
       title: json['title'],
       body: json['body']);
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'userId': userId,
+      'title': title,
+      'body': body,
+    };
+  }
 }
