@@ -1,3 +1,4 @@
+import 'package:challenge_fudo/core/data/data_sources/local_data_source.dart';
 import 'package:challenge_fudo/core/data/network/dio_client.dart';
 import 'package:challenge_fudo/core/presentation/pages/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,12 @@ void main() async {
 Future<void> initializeDatabase() async {
   final database = await openDatabase(
     join(await getDatabasesPath(), 'database.db'),
-    onCreate: (db, version) {
-      return db.execute(
+    onCreate: (db, version) async {
+      await db.execute(
         'CREATE TABLE posts(id INTEGER PRIMARY KEY, userId INTEGER, title TEXT, body TEXT)',
+      );
+      await db.execute(
+        'CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT)',
       );
     },
     version: 1,
@@ -38,8 +42,16 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: Pages.pages,
-      //TODO parametrizar dependiendo si hizo login o no
-      initialRoute: Routes.loginPage,
+      initialRoute: _getInitialRoute(),
     );
+  }
+
+  String _getInitialRoute() {
+    final prefs = Get.find<SharedPreferences>();
+
+    final isAuthenticated = prefs.getBool(isAuthenticatedKey);
+    return isAuthenticated == null || !isAuthenticated
+        ? Routes.loginPage
+        : Routes.postsPage;
   }
 }

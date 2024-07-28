@@ -1,9 +1,12 @@
 import 'package:challenge_fudo/posts/data/models/post_model.dart';
+import 'package:challenge_fudo/posts/data/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class LocalPostsDataSource {
   Future<List<PostModel>> getPosts();
+  Future<List<UserModel>> getUsers();
   Future<void> insertPost(PostModel post);
+  Future<void> insertUser(UserModel user);
 }
 
 class LocalPostsDataSourceImpl implements LocalPostsDataSource {
@@ -13,7 +16,7 @@ class LocalPostsDataSourceImpl implements LocalPostsDataSource {
 
   @override
   Future<List<PostModel>> getPosts() async {
-    final List<Map<String, Object?>> postsMaps = await database.query('dogs');
+    final List<Map<String, Object?>> postsMaps = await database.query('posts');
 
     return [
       for (final {
@@ -27,10 +30,32 @@ class LocalPostsDataSourceImpl implements LocalPostsDataSource {
   }
 
   @override
+  Future<List<UserModel>> getUsers() async {
+    final List<Map<String, Object?>> usersMaps = await database.query('users');
+
+    return [
+      for (final {
+            'id': id as int,
+            'name': name as String,
+          } in usersMaps)
+        UserModel(id: id, name: name)
+    ];
+  }
+
+  @override
   Future<void> insertPost(PostModel post) async {
     await database.insert(
       'posts',
       post.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  @override
+  Future<void> insertUser(UserModel user) async {
+    await database.insert(
+      'users',
+      user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }

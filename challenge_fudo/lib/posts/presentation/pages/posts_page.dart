@@ -11,9 +11,13 @@ class PostsPage extends GetView<PostsController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: const Text('Posts')),
-      body: controller.obx(
-        onLoading: const Center(child: CircularProgressIndicator()),
-        (_) => _Content(controller: controller),
+      body: RefreshIndicator(
+        onRefresh: () async => await controller.getInformation(),
+        child: controller.obx(
+          onLoading: const Center(child: CircularProgressIndicator()),
+          onEmpty: const Center(child: Text('No hay información')),
+          (_) => _Content(controller: controller),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
