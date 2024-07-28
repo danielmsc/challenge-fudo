@@ -49,6 +49,7 @@ class _Content extends StatelessWidget {
                 itemBuilder: (context, index) => PostTile(
                   title: controller.filteredPosts[index].title,
                   body: controller.filteredPosts[index].body,
+                  userId: controller.filteredPosts[index].userId,
                 ),
               ),
             ),
