@@ -42,6 +42,7 @@ class PostsController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     await getPosts();
     await getUsers();
+    change(null, status: RxStatus.success());
   }
 
   Future<void> getPosts() async {
@@ -65,12 +66,6 @@ class PostsController extends GetxController with StateMixin {
       users = r;
       await _insertUsers();
     });
-
-    if (users.isEmpty) {
-      change(null, status: RxStatus.empty());
-    } else {
-      change(null, status: RxStatus.success());
-    }
   }
 
   void onSearchBarChanged(String name) {
