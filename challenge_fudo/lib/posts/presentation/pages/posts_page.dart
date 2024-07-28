@@ -15,15 +15,6 @@ class PostsPage extends GetView<PostsController> {
         onRefresh: () async => await controller.getInformation(),
         child: controller.obx(
           onLoading: const Center(child: CircularProgressIndicator()),
-          onEmpty: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: const Center(
-                child: Text('No hay información'),
-              ),
-            ),
-          ),
           (_) => _Content(controller: controller),
         ),
       ),
