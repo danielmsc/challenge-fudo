@@ -50,6 +50,7 @@ class _Content extends StatelessWidget {
                 controller: controller.userIdTextController,
                 validator: (value) => controller.validateUserId(value),
                 decoration: const InputDecoration(hintText: 'Id de usuario'),
+                keyboardType: TextInputType.number,
               ),
             ),
             ElevatedButton(
