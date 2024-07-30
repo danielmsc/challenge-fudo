@@ -7,6 +7,8 @@ abstract class LocalPostsDataSource {
   Future<List<UserModel>> getUsers();
   Future<void> insertPost(PostModel post);
   Future<void> insertUser(UserModel user);
+  Future<void> deletePosts();
+  Future<void> deleteUsers();
 }
 
 class LocalPostsDataSourceImpl implements LocalPostsDataSource {
@@ -58,5 +60,15 @@ class LocalPostsDataSourceImpl implements LocalPostsDataSource {
       user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  @override
+  Future<void> deletePosts() async {
+    await database.delete('posts');
+  }
+
+  @override
+  Future<void> deleteUsers() async {
+    await database.delete('users');
   }
 }

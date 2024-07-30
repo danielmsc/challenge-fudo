@@ -30,4 +30,14 @@ class LocalPostsRepositoryImpl implements LocalPostsRepository {
   Future<Either<Failure, void>> insertUser(UserModel user) async {
     return await ApiNetwork.call(() async => await dataSource.insertUser(user));
   }
+
+  @override
+  Future<Either<Failure, void>> deletePosts() async {
+    return await ApiNetwork.call(() async => await dataSource.deletePosts());
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteUsers() async {
+    return await ApiNetwork.call(() async => await dataSource.deleteUsers());
+  }
 }

@@ -8,4 +8,6 @@ abstract class LocalPostsRepository {
   Future<Either<Failure, List<UserModel>>> getUsers();
   Future<Either<Failure, void>> insertPost(PostModel post);
   Future<Either<Failure, void>> insertUser(UserModel user);
+  Future<Either<Failure, void>> deletePosts();
+  Future<Either<Failure, void>> deleteUsers();
 }

@@ -10,7 +10,10 @@ class PostsPage extends GetView<PostsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('Posts')),
+      appBar: AppBar(
+        title: const Text('Posts'),
+        actions: [_LogoutButton(onPressed: controller.logout)],
+      ),
       body: RefreshIndicator(
         onRefresh: () async => await controller.getInformation(),
         child: controller.obx(
@@ -23,6 +26,19 @@ class PostsPage extends GetView<PostsController> {
         onPressed: () async => await controller.goToCreatePostPage(),
       ),
     );
+  }
+}
+
+class _LogoutButton extends StatelessWidget {
+  final Function() onPressed;
+
+  const _LogoutButton({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () async => await onPressed(),
+        icon: const Icon(Icons.logout));
   }
 }
 

@@ -1,6 +1,9 @@
 import 'package:challenge_fudo/core/presentation/pages/routes.dart';
+import 'package:challenge_fudo/login/domain/use_cases/set_authentication_status.dart';
 import 'package:challenge_fudo/posts/domain/entities/post.dart';
 import 'package:challenge_fudo/posts/domain/entities/user.dart';
+import 'package:challenge_fudo/posts/domain/use_cases/delete_posts.dart';
+import 'package:challenge_fudo/posts/domain/use_cases/delete_users.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_local_posts.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_local_users.dart';
 import 'package:challenge_fudo/posts/domain/use_cases/get_posts.dart';
@@ -22,6 +25,9 @@ class PostsController extends GetxController with StateMixin {
   final GetLocalUsers getLocalUsersUseCase;
   final InsertPost insertPostUseCase;
   final InsertUser insertUserUseCase;
+  final DeletePosts deletePostsUseCase;
+  final DeleteUsers deleteUsersUseCase;
+  final SetAuthenticationStatus setAuthenticationStatusUseCase;
 
   PostsController({
     required this.getPostsUseCase,
@@ -30,6 +36,9 @@ class PostsController extends GetxController with StateMixin {
     required this.getLocalUsersUseCase,
     required this.insertPostUseCase,
     required this.insertUserUseCase,
+    required this.deletePostsUseCase,
+    required this.deleteUsersUseCase,
+    required this.setAuthenticationStatusUseCase,
   });
 
   @override
@@ -125,5 +134,13 @@ class PostsController extends GetxController with StateMixin {
         ),
       );
     }
+  }
+
+  Future<void> logout() async {
+    await deletePostsUseCase(NoParamsDeletePosts());
+    await deleteUsersUseCase(NoParamsDeleteUsers());
+    await setAuthenticationStatusUseCase(
+        SetAuthenticationStatusParams(state: false));
+    await Get.offAllNamed(Routes.loginPage);
   }
 }
