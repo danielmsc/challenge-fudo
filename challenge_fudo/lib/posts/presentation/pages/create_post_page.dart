@@ -26,42 +26,54 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Form(
-        key: controller.formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: controller.titleTextController,
-              validator: (value) => controller.validateTitle(value),
-              decoration: const InputDecoration(hintText: 'Título'),
+      child: Stack(
+        children: [
+          Obx(() => Visibility(
+              visible: controller.shouldShowLoading,
+              child: const Center(child: CircularProgressIndicator()))),
+          Form(
+            key: controller.formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: controller.titleTextController,
+                  validator: (value) => controller.validateTitle(value),
+                  decoration: const InputDecoration(hintText: 'Título'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    controller: controller.bodyTextController,
+                    validator: (value) => controller.validateBody(value),
+                    decoration: const InputDecoration(hintText: 'Descripción'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32.0),
+                  child: TextFormField(
+                    controller: controller.userIdTextController,
+                    validator: (value) => controller.validateUserId(value),
+                    decoration:
+                        const InputDecoration(hintText: 'Id de usuario'),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                Obx(
+                  () => ElevatedButton(
+                      onPressed: controller.shouldShowLoading
+                          ? null
+                          : () async {
+                              if (controller.validateForm()) {
+                                await controller.createPost();
+                              }
+                            },
+                      child: const Text('Crear post')),
+                )
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextFormField(
-                controller: controller.bodyTextController,
-                validator: (value) => controller.validateBody(value),
-                decoration: const InputDecoration(hintText: 'Descripción'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: TextFormField(
-                controller: controller.userIdTextController,
-                validator: (value) => controller.validateUserId(value),
-                decoration: const InputDecoration(hintText: 'Id de usuario'),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  if (controller.validateForm()) {
-                    await controller.createPost();
-                  }
-                },
-                child: const Text('Crear post'))
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

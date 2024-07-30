@@ -12,6 +12,9 @@ class CreatePostController extends GetxController {
 
   CreatePostController({required this.createPostUseCase});
 
+  final _shouldShowLoading = false.obs;
+  bool get shouldShowLoading => _shouldShowLoading.value;
+
   String? validateTitle(String? value) {
     if (value != null) {
       if (value.isNotEmpty && !value.isBlank!) {
@@ -44,6 +47,7 @@ class CreatePostController extends GetxController {
   bool validateForm() => formKey.currentState!.validate();
 
   Future<void> createPost() async {
+    _shouldShowLoading.value = true;
     final result = await createPostUseCase(
       CreatePostParams(
         title: titleTextController.text,
@@ -54,6 +58,7 @@ class CreatePostController extends GetxController {
 
     result.fold((l) => l.showError(),
         (r) => Fluttertoast.showToast(msg: 'Post creado satisfactoriamente'));
+    _shouldShowLoading.value = false;
   }
 
   @override
